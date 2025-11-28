@@ -41,17 +41,22 @@ async def main():
         instructions="You are a helpful assistant. Keep your responses brief.",
     )
 
-    # Create runner with session
-    runner = Runner(agent=agent, session=session)
-
     # First message
     print("\n[User]: Hello! My name is Alice.")
-    result = await runner.run("Hello! My name is Alice.")
+    result = await Runner.run(
+        starting_agent=agent,
+        input="Hello! My name is Alice.",
+        session=session,
+    )
     print(f"[Assistant]: {result.final_output}")
 
     # Second message - should remember the name
     print("\n[User]: What's my name?")
-    result = await runner.run("What's my name?")
+    result = await Runner.run(
+        starting_agent=agent,
+        input="What's my name?",
+        session=session,
+    )
     print(f"[Assistant]: {result.final_output}")
 
     # Check session contents
