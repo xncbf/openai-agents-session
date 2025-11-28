@@ -1,0 +1,152 @@
+[project]
+name = "openai-agents-session"
+version = "0.1.0"
+description = "Redis and DynamoDB session backends for openai-agents-python"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "xncbf", email = "xncbf12@gmail.com" }]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
+    "Framework :: AsyncIO",
+]
+keywords = ["openai", "agents", "session", "redis", "dynamodb", "memory"]
+
+dependencies = [
+    "openai-agents>=0.1.0",
+]
+
+[project.optional-dependencies]
+redis = [
+    "redis>=5.0.0",
+]
+dynamodb = [
+    "aiobotocore>=2.9.0",
+    "types-aiobotocore[dynamodb]>=2.9.0",
+]
+all = [
+    "openai-agents-session[redis,dynamodb]",
+]
+dev = [
+    "openai-agents-session[all]",
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
+    "fakeredis>=2.26.0",
+    "ruff>=0.8.0",
+    "ty>=0.0.1a7",
+]
+docs = [
+    "mkdocs-material>=9.5.0",
+    "mkdocstrings[python]>=0.27.0",
+    "mkdocs-gen-files>=0.5.0",
+    "mkdocs-literate-nav>=0.6.0",
+    "mkdocs-section-index>=0.3.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/xncbf/openai-agents-session"
+Documentation = "https://xncbf.github.io/openai-agents-session/"
+Repository = "https://github.com/xncbf/openai-agents-session"
+Issues = "https://github.com/xncbf/openai-agents-session/issues"
+Changelog = "https://github.com/xncbf/openai-agents-session/blob/main/CHANGELOG.md"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/openai_agents_session"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/README.md",
+    "/LICENSE",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "openai-agents-session[dev]",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # Pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG",    # flake8-unused-arguments
+    "SIM",    # flake8-simplify
+    "TCH",    # flake8-type-checking
+    "PTH",    # flake8-use-pathlib
+    "RUF",    # Ruff-specific rules
+    "ASYNC",  # flake8-async
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "B008",   # do not perform function calls in argument defaults
+    "B904",   # allow raise without from in except
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["openai_agents_session"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ARG"]  # Unused arguments are OK in tests
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+addopts = [
+    "-v",
+    "--tb=short",
+    "--strict-markers",
+]
+markers = [
+    "redis: marks tests as requiring redis",
+    "dynamodb: marks tests as requiring dynamodb",
+]
+
+[tool.coverage.run]
+source = ["src/openai_agents_session"]
+branch = true
+parallel = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "@abstractmethod",
+    "@overload",
+]
+show_missing = true
+
+[tool.ty]
+python-version = "3.10"

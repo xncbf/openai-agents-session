@@ -1,0 +1,21 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  dynamodb:
+    image: amazon/dynamodb-local:latest
+    ports:
+      - "8000:8000"
+    command: "-jar DynamoDBLocal.jar -sharedDb -inMemory"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:8000 || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 5

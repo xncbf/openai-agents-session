@@ -1,0 +1,126 @@
+site_name: openai-agents-session
+site_url: https://xncbf.github.io/openai-agents-session/
+site_description: Redis and DynamoDB session backends for openai-agents-python
+site_author: xncbf
+repo_name: xncbf/openai-agents-session
+repo_url: https://github.com/xncbf/openai-agents-session
+edit_uri: edit/main/docs/
+
+copyright: Copyright &copy; 2024 xncbf
+
+theme:
+  name: material
+  language: en
+  palette:
+    # Dark mode only (like OpenAI docs)
+    scheme: slate
+    primary: black
+    accent: blue
+  font:
+    text: Inter
+    code: Roboto Mono
+  features:
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
+    - content.tabs.link
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+  logo: assets/logo.svg
+  favicon: assets/favicon.svg
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/xncbf/openai-agents-session
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/openai-agents-session/
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: xncbf
+      repo: openai-agents-session
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            members_order: source
+            merge_init_into_class: true
+            separate_signature: true
+            signature_crossrefs: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+  - Backends:
+      - Redis: backends/redis.md
+      - DynamoDB: backends/dynamodb.md
+  - API Reference:
+      - api/index.md
+      - RedisSession: api/redis.md
+      - DynamoDBSession: api/dynamodb.md
+  - Examples:
+      - examples/index.md
+      - Integration Testing: examples/integration-testing.md
