@@ -146,9 +146,7 @@ class TestDynamoDBSession:
         retrieved = await inmemory_dynamodb_session.get_items()
         assert len(retrieved) == 0
 
-    async def test_session_isolation(
-        self, inmemory_dynamodb_client, sample_items: list[dict]
-    ):
+    async def test_session_isolation(self, inmemory_dynamodb_client, sample_items: list[dict]):
         """Test that different sessions are isolated."""
         session1 = DynamoDBSession(
             session_id="session-1",
@@ -199,9 +197,7 @@ class TestDynamoDBSession:
 class TestDynamoDBSessionWithMock:
     """Test suite using mock client to verify API calls."""
 
-    async def test_get_items_calls_dynamodb(
-        self, mock_dynamodb_client, session_id: str
-    ):
+    async def test_get_items_calls_dynamodb(self, mock_dynamodb_client, session_id: str):
         """Test that get_items makes correct DynamoDB API call."""
         mock_dynamodb_client.get_item.return_value = {}
 
@@ -218,9 +214,7 @@ class TestDynamoDBSessionWithMock:
         assert call_kwargs["TableName"] == "test_table"
         assert call_kwargs["Key"]["session_id"]["S"] == session_id
 
-    async def test_clear_session_calls_delete_item(
-        self, mock_dynamodb_client, session_id: str
-    ):
+    async def test_clear_session_calls_delete_item(self, mock_dynamodb_client, session_id: str):
         """Test that clear_session makes correct DynamoDB API call."""
         session = DynamoDBSession(
             session_id=session_id,

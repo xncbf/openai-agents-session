@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, cast
 
 from agents.memory import SessionABC
 
@@ -59,7 +59,7 @@ class RedisSession(SessionABC):
     def _serialize_item(self, item: TResponseInputItem) -> str:
         """Serialize an item to JSON string."""
         if hasattr(item, "model_dump"):
-            return json.dumps(item.model_dump(mode="json"))
+            return json.dumps(cast("Any", item).model_dump(mode="json"))
         if isinstance(item, dict):
             return json.dumps(item)
         raise TypeError(f"Cannot serialize item of type {type(item)}")

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import time
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 from agents.memory import SessionABC
 
@@ -66,7 +66,7 @@ class DynamoDBSession(SessionABC):
         serialized = []
         for item in items:
             if hasattr(item, "model_dump"):
-                serialized.append(item.model_dump(mode="json"))
+                serialized.append(cast("Any", item).model_dump(mode="json"))
             elif isinstance(item, dict):
                 serialized.append(item)
             else:

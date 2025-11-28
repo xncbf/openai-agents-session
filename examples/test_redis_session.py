@@ -45,7 +45,7 @@ async def main():
 
     # Get with limit
     limited = await session.get_items(limit=2)
-    print(f"\n[4] Retrieved last 2 items:")
+    print("\n[4] Retrieved last 2 items:")
     for item in limited:
         print(f"    - [{item['role']}] {item['content']}")
 
